@@ -6,8 +6,13 @@ namespace itis {
 
 void LinkedQueue::Enqueue(Element e) {
   auto end = new SinglyNode(e, nullptr);
-  back_ -> next = end;
-  back_ = end;
+  if (size_ == 0) {
+    front_ = end;
+    back_ = end;
+  } else {
+    back_ -> next = end;
+    back_ = back_ -> next;
+  }
   size_++;
 }
 
@@ -19,6 +24,9 @@ void LinkedQueue::Dequeue() {
   front_ = front_ -> next;
   delete start;
   size_--;
+  if (size_ == 0) {
+    back_ = nullptr;
+  }
 }
 
 void LinkedQueue::Clear() {
